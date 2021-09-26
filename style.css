@@ -35,3 +35,11 @@ button {
   border-radius: 5px;
   box-shadow: 2px 5px 5px #333;
 }
+
+.priority-high {
+  color: rgb(173, 3, 3);
+}
+
+.priority-medium {
+  color: rgb(95, 54, 4);
+}
