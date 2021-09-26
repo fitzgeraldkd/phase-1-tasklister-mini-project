@@ -8,6 +8,9 @@ body {
   min-height: 100%;
   min-width: 100%;
   background: linear-gradient(pink, violet);
+  margin: 0;
+  padding: 25px;
+  box-sizing: border-box;
 }
 
 button {
@@ -42,4 +45,16 @@ button {
 
 .priority-medium {
   color: rgb(95, 54, 4);
+}
+
+td, th {
+  padding: 0 25px;
+}
+
+.delete button {
+  background: lightcoral;
+  border-radius: 3px;
+  border-color: red;
+  font-size: 10px;
+  font-weight: bolder;
 }

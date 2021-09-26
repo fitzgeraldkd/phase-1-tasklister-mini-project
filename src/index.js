@@ -28,6 +28,9 @@ function handleAddTask(event) {
     const dataInputElement = form.querySelector(cellData.inputId);
     const newCell = createTableCell(cellData.cellClassName, dataInputElement.value);
     newTaskRow.appendChild(newCell);
+    if (cellData.cellClassName === 'priority') {
+      newTaskRow.className = `priority-${dataInputElement.value.toLowerCase()}`;
+    }
     dataInputElement.value = cellData.defaultInputValue ? cellData.defaultInputValue : "";
   });
 
@@ -62,18 +65,23 @@ function sortTasks(sortingProperty) {
   const taskRowsArray = Array.from(taskTableBody.querySelectorAll('tr'));
 
   taskRowsArray.sort((first, second) => {
-    // TODO: sorting doesn't work for items being edited
-    let firstProperty = first.querySelector(`.${sortingProperty}`).textContent;
-    let secondProperty = second.querySelector(`.${sortingProperty}`).textContent;
+    let sortingCells = [
+      first.querySelector(`.${sortingProperty}`),
+      second.querySelector(`.${sortingProperty}`)
+    ];
+    const sortingValues = sortingCells.map((sortingCell) => {
+      let sortingValue;
+      if (sortingCell.querySelector('input, select') === null) {
+        sortingValue = sortingCell.textContent;
+      } else {
+        sortingValue = sortingCell.firstChild.value;
+      }
+      if (sortingProperty === 'priority') {sortingValue = priorityOptions()[sortingValue];}
+      return sortingValue;
+    });
 
-    if (sortingProperty === 'priority') {
-      const priorityObj = priorityOptions();
-      firstProperty = priorityObj[firstProperty];
-      secondProperty = priorityObj[secondProperty];
-    }
-
-    if (firstProperty < secondProperty) {return -1};
-    if (firstProperty > secondProperty) {return 1};
+    if (sortingValues[0] < sortingValues[1]) {return -1};
+    if (sortingValues[0] > sortingValues[1]) {return 1};
     return 0;
   });
 
